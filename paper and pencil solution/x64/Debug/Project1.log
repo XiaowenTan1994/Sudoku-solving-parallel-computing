@@ -1,0 +1,15 @@
+﻿  main.cpp
+C:\Users\TXWSD\OneDrive\桌面\451 project\code\paper and pencil solution\main.cpp(32): warning C4312: 'type cast': conversion from 'int' to 'void *' of greater size
+C:\Users\TXWSD\OneDrive\桌面\451 project\code\paper and pencil solution\main.cpp(93): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\TXWSD\OneDrive\桌面\451 project\code\paper and pencil solution\main.cpp(93): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\TXWSD\OneDrive\桌面\451 project\code\paper and pencil solution\main.cpp(142): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_attr_init referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_attr_setdetachstate referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_create referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_join referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_mutex_init referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_mutex_destroy referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_cond_init referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_pthread_cond_destroy referenced in function "void __cdecl findfixedposition(void)" (?findfixedposition@@YAXXZ)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\lib\x64\pthreadVC2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\TXWSD\OneDrive\桌面\451 project\code\paper and pencil solution\x64\Debug\Project1.exe : fatal error LNK1120: 8 unresolved externals
