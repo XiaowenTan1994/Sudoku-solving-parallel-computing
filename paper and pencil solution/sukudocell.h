@@ -16,7 +16,7 @@ public:
 	void getlist() {
 		unordered_set<int> ::iterator itr;
 		for (itr = options.begin(); itr != options.end(); itr++) {
-			options.insert(*itr);
+			options_list.push_back(*itr);
 		}
 	}
 };

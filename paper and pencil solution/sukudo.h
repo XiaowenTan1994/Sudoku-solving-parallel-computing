@@ -24,6 +24,8 @@ bool sukudo::checkvalid(int i, int j) {
 	// 3 by 3 grid
 	for (int index_i = i / 3 * 3; index_i < i / 3 * 3 + 3; index_i++) {
 		for (int index_j = j / 3 * 3; index_j < j / 3 * 3 + 3; index_j++) {
+			if (index_i == i && index_j == j)
+				continue;
 			if (matrix[index_i][index_j].val == matrix[i][j].val)
 				return false;
 		}
@@ -31,13 +33,17 @@ bool sukudo::checkvalid(int i, int j) {
 
 	//horizontal
 	for (int index_i = 0; index_i < 9; index_i++) {
+		if (index_i == i)
+			continue;
 		if (matrix[index_i][j].val == matrix[i][j].val)
 			return false;
 	}
 
 	//vertical
 	for (int index_j = 0; index_j < 9; index_j++) {
-		if (matrix[i][index_j].val == matrix[i][index_j].val)
+		if (index_j == j)
+			continue;
+		if (matrix[i][index_j].val == matrix[i][j].val)
 			return false;
 	}
 	return true;

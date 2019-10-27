@@ -78,6 +78,7 @@ void findfixedposition() {
 		for (int j = 0; j < 3; j++) {
 			int data[2] = { i,j };
 			int rc = pthread_create(&threads[i][j], &attr, distribute_findfixedposition, (void*)data);
+			Delay(3000);
 		}
 	}
 	for (int i = 0; i < 3; i++) {
@@ -85,8 +86,8 @@ void findfixedposition() {
 			int rc = pthread_join(threads[i][j], NULL);
 		}
 	}
-	pthread_cond_destroy(&waitCond);
-	pthread_mutex_destroy(&mutex1);
+	pthread_cond_destroy(&waitCond1);
+	pthread_mutex_destroy(&mutex);
 }
 
 void* distribute_solve(void* threadarg) {
@@ -109,37 +110,39 @@ void* distribute_findfixedposition(void* threadarg) {
 	for (int i = index[0]*3; i < index[0] * 3 + 3; i++) {
 		for (int j = index[1] * 3; j < index[1] * 3 + 3; j++) {
 			// 3 by 3 grid
-			for (int index_i = i / 3 * 3; index_i < i / 3 * 3 + 3; index_i++) {
-				for (int index_j = j / 3 * 3; index_j < j / 3 * 3 + 3; index_j++) {
-					if (sukudo_now.matrix[i][j].options.find(sukudo_now.matrix[index_i][index_j].val) != sukudo_now.matrix[i][j].options.end()) {
-						sukudo_now.matrix[i][j].options.erase(sukudo_now.matrix[index_i][index_j].val);
+			if (sukudo_now.matrix[i][j].val == 0) {
+				for (int index_i = i / 3 * 3; index_i < i / 3 * 3 + 3; index_i++) {
+					for (int index_j = j / 3 * 3; index_j < j / 3 * 3 + 3; index_j++) {
+						if (sukudo_now.matrix[i][j].options.find(sukudo_now.matrix[index_i][index_j].val) != sukudo_now.matrix[i][j].options.end()) {
+							sukudo_now.matrix[i][j].options.erase(sukudo_now.matrix[index_i][index_j].val);
+						}
 					}
 				}
-			}
 
-			//horizontal
-			for (int index_i = 0; index_i < 9; index_i++) {
-				if (sukudo_now.matrix[i][j].options.find(sukudo_now.matrix[index_i][j].val) != sukudo_now.matrix[i][j].options.end()) {
-					sukudo_now.matrix[i][j].options.erase(sukudo_now.matrix[index_i][j].val);
+				//horizontal
+				for (int index_i = 0; index_i < 9; index_i++) {
+					if (sukudo_now.matrix[i][j].options.find(sukudo_now.matrix[index_i][j].val) != sukudo_now.matrix[i][j].options.end()) {
+						sukudo_now.matrix[i][j].options.erase(sukudo_now.matrix[index_i][j].val);
+					}
 				}
-			}
 
-			//vertical
-			for (int index_j = 0; index_j < 9; index_j++) {
-				if (sukudo_now.matrix[i][j].options.find(sukudo_now.matrix[i][index_j].val) != sukudo_now.matrix[i][j].options.end()) {
-					sukudo_now.matrix[i][j].options.erase(sukudo_now.matrix[i][index_j].val);
+				//vertical
+				for (int index_j = 0; index_j < 9; index_j++) {
+					if (sukudo_now.matrix[i][j].options.find(sukudo_now.matrix[i][index_j].val) != sukudo_now.matrix[i][j].options.end()) {
+						sukudo_now.matrix[i][j].options.erase(sukudo_now.matrix[i][index_j].val);
+					}
 				}
-			}
 
-			if (sukudo_now.matrix[i][j].options.size() == 1) {
-				sukudo_now.matrix[i][j].val = *(sukudo_now.matrix[i][j].options.begin());
-			}
-			sukudo_now.matrix[i][j].getlist();
-			// block
-			if (sukudo_now.matrix[i][j].options.size() > sukudo_now.optionlongest) {
-				sukudo_now.longest_i = i;
-				sukudo_now.longest_j = j;
-				sukudo_now.optionlongest = sukudo_now.matrix[i][j].options.size();
+				if (sukudo_now.matrix[i][j].options.size() == 1) {
+					sukudo_now.matrix[i][j].val = *(sukudo_now.matrix[i][j].options.begin());
+				}
+				sukudo_now.matrix[i][j].getlist();
+				// block
+				if (sukudo_now.matrix[i][j].options.size() > sukudo_now.optionlongest) {
+					sukudo_now.longest_i = i;
+					sukudo_now.longest_j = j;
+					sukudo_now.optionlongest = sukudo_now.matrix[i][j].options.size();
+				}
 			}
 		}
 	}
@@ -165,8 +168,10 @@ int main() {
 	}
 	sukudo_now = sukudo(matrix);
 	sukudo_now.print();
-
+	cout << endl << endl;
 	findfixedposition();
+	sukudo_now.print();
+	cout << endl << endl;
 	solve();
 	sukudo_now.print();
 	return 0;
