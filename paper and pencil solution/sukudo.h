@@ -52,12 +52,15 @@ bool sukudo::checkvalid(int i, int j) {
 
 
 void sukudo::print() {
+	ofstream ofs("answer.txt");
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
-			cout << matrix[i][j].val << '|';
+			ofs<<matrix[i][j].val;
+			ofs << "|";
 		}
-		cout << endl << "--------------------" << endl;
+		ofs<<"\n--------------------\n";
 	}
+	ofs.close();
 }
 
 sukudo::sukudo(int data[9][9])

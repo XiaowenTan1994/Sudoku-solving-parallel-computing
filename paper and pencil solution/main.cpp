@@ -5,13 +5,14 @@
 #pragma comment(lib, "pthreadVC2.lib")
 using namespace std;
 sukudo sukudo_now;
+sukudo result;
 pthread_mutex_t mutex;
 pthread_cond_t waitCond1;
 pthread_attr_t attr1;
 pthread_mutex_t mutex1;
 pthread_cond_t waitCond;
 pthread_attr_t attr;
-
+bool* flag_thread;
 void   Delay(int   time);
 void* distribute_findfixedposition(void* threadarg);
 void* distribute_solve(void* threadarg);
@@ -28,6 +29,7 @@ void solve() {
 	pthread_cond_init(&waitCond, NULL);
 	pthread_mutex_init(&mutex1, NULL);
 	pthread_t* threads = new pthread_t[sukudo_now.optionlongest];
+	flag_thread = new bool[sukudo_now.optionlongest];
 	for (int i = 0; i < sukudo_now.optionlongest; i++) {
 		int rc = pthread_create(&threads[i], &attr, distribute_solve, (void*)i);
 		Delay(3000);
@@ -40,27 +42,36 @@ void solve() {
 }
 
 bool solve(int i, int j, sukudo &temp) {
-	if ((temp.matrix[i][j].val != 0)||((i==temp.longest_i)&&(j==temp.longest_j))) {
+	if ((i==temp.longest_i)&&(j==temp.longest_j)) {
 		j = j + 1;
+	}
+	while (temp.matrix[i][j].val != 0) {
+		j = j + 1;	
+		if (j >= 9) {
+			j = 0;
+			i = i + 1;
+		}
 	}
 	if (j >= 9) {
 		j = 0;
 		i = i + 1;
 	}
+
 	if (i >= 9) {
 		return true;
 	}
-	bool flag = true;
+	bool flag = false;
 	for (int index = 0; index < temp.matrix[i][j].options_list.size(); index++) {
 		temp.matrix[i][j].val = temp.matrix[i][j].options_list.at(index);
 		if (temp.checkvalid(i, j)) {
 			if (solve(i, j + 1, temp)) {
-				flag = false;
+				flag = true;
 				break;
 			}
 		}
+		temp.matrix[i][j].val = 0;
 	}
-	return flag ? false : true;
+	return flag;
 }
 
 void findfixedposition() {
@@ -94,13 +105,11 @@ void* distribute_solve(void* threadarg) {
 	int index = (int)threadarg;
 	sukudo temp = sukudo_now;
 	temp.matrix[sukudo_now.longest_i][sukudo_now.longest_j].val = temp.matrix[sukudo_now.longest_i][sukudo_now.longest_j].options_list.at(index);
-	bool flag = solve(0, 0, temp);
-	if (flag) {
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				sukudo_now.matrix[i][j].val = temp.matrix[i][j].val;
-			}
-		}
+	flag_thread[index] = solve(0, 0, temp);
+	if (flag_thread[index]) {
+		pthread_mutex_lock(&mutex1);
+		result = temp;
+		pthread_mutex_unlock(&mutex1);
 	}
 	return (void*)0;
 }
@@ -110,6 +119,9 @@ void* distribute_findfixedposition(void* threadarg) {
 	for (int i = index[0]*3; i < index[0] * 3 + 3; i++) {
 		for (int j = index[1] * 3; j < index[1] * 3 + 3; j++) {
 			// 3 by 3 grid
+			if ((i == 2) && (j == 0)) {
+				int op = 0;
+			}
 			if (sukudo_now.matrix[i][j].val == 0) {
 				for (int index_i = i / 3 * 3; index_i < i / 3 * 3 + 3; index_i++) {
 					for (int index_j = j / 3 * 3; index_j < j / 3 * 3 + 3; index_j++) {
@@ -138,11 +150,13 @@ void* distribute_findfixedposition(void* threadarg) {
 				}
 				sukudo_now.matrix[i][j].getlist();
 				// block
+				pthread_mutex_lock(&mutex);
 				if (sukudo_now.matrix[i][j].options.size() > sukudo_now.optionlongest) {
 					sukudo_now.longest_i = i;
 					sukudo_now.longest_j = j;
 					sukudo_now.optionlongest = sukudo_now.matrix[i][j].options.size();
 				}
+				pthread_mutex_unlock(&mutex);
 			}
 		}
 	}
@@ -167,12 +181,12 @@ int main() {
 		}
 	}
 	sukudo_now = sukudo(matrix);
-	sukudo_now.print();
-	cout << endl << endl;
+	//sukudo_now.print();
+	//cout << endl << endl;
 	findfixedposition();
-	sukudo_now.print();
-	cout << endl << endl;
+	//sukudo_now.print();
+	//cout << endl << endl;
 	solve();
-	sukudo_now.print();
+	result.print();
 	return 0;
 }
