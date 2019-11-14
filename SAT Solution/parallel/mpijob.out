@@ -1,0 +1,15 @@
+---------- Begin SLURM Prolog ----------
+Job ID:        5029155
+Username:      guangyuc
+Accountname:   lc_vkp2
+Name:          job.sl
+Partition:     main
+Nodelist:      hpc[3165-3166,3169,3185,3195,3204,3214,3216-3217,3222-3223,3225,3230-3231,3233,3236]
+TasksPerNode:  4(x16)
+CPUsPerTask:   Default[1]
+TMPDIR:        /tmp/5029155.main
+SCRATCHDIR:    /staging/scratch/5029155
+Cluster:       uschpc
+HSDA Account:  false
+---------- 2019-11-14 08:46:43 ---------
+Execution time: 17411
