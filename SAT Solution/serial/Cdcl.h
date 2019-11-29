@@ -1,7 +1,3 @@
-//
-// Created by jan on 21.11.17.
-//
-
 #ifndef SAT_SOLVER_CDCL_H
 #define SAT_SOLVER_CDCL_H
 
