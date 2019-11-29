@@ -1,11 +1,3 @@
-//
-//  Model.cpp
-//  SAT-Solver
-//
-//  Created by Jakub Lichman on 10/26/17.
-//  Copyright © 2017 Jakub Lichman. All rights reserved.
-//
-
 #include "Model.h"
 
 // creates empty state
