@@ -14,7 +14,6 @@ using namespace std::chrono;
 
 void default_args(map<string, string>* arg_map) {
 	arg_map->insert({ "-s", "CDCL" });
-	//arg_map->insert({ "-cerr-level", "0" });
 };
 
 int main(int argc, char* argv[]) {
@@ -33,7 +32,6 @@ int main(int argc, char* argv[]) {
 		auto* res = new CDCL(*cur);
 		bool sat = res->SATISFIABLE();
 		if (sat) {
-			//cout << "sat" << std::endl;
 			CDCL::output(res->get_cnf()->get_model());
 		}
 		else {
@@ -45,10 +43,6 @@ int main(int argc, char* argv[]) {
 	// time end
 	high_resolution_clock::time_point t2 = high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
-	//ofstream f;
-	//f.open("output.txt", ios_base::app);
 	cout << duration << endl;
-	//f.close();
-	system("pause");
 	return 0;
 }
