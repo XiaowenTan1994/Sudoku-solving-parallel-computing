@@ -13,9 +13,6 @@ using namespace std::chrono;
 
 int CERR_LEVEL = 0;
 
-/**
- * Main entry point of parallel version.
- */
 int main(int argc, char* argv[]) {
 	char* path = argv[argc - 1];
 	map<std::string, std::string> arg_map;
@@ -24,12 +21,12 @@ int main(int argc, char* argv[]) {
 	CNFParser* parser = new CNFParser(path);
 	parser->parsing();
 	unordered_set<CNF*> cnfs = parser->get_CNFS();
-	CNF cnf = *(*(cnfs.begin()));                                                   // take first one
+	CNF cnf = *(*(cnfs.begin())); 
 
-	MPI_Init(&argc, &argv);                                                         // mpi initialization
-	MPI_Datatype meta_data_type = setup_meta_type();                                // create data type that is used in inter process communication.
+	MPI_Init(&argc, &argv);
+	MPI_Datatype meta_data_type = setup_meta_type();
 	int rank;
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);                                           // get rank and size of processes
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank); 
 	int size;
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	if (rank == 0) {
@@ -40,12 +37,10 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		SlaveWorker* w = new SlaveWorker(*(*(cnfs.begin())), meta_data_type, rank);
-		//Config* c = new Config(true, -3, w);
 		w->wait_for_instructions_from_master();
-		//delete c;
 		delete w;
 	}
 
-	MPI_Finalize();                                                                 // mpi end
+	MPI_Finalize();       
 	return EXIT_SUCCESS;
 }
