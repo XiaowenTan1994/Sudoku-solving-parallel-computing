@@ -13,12 +13,8 @@
 
 const int NUM_MEASUREMENTS = 4;
 
-/**
- * Used to collect measurements and write measurements to files
- */
 class Measurement {
 private:
-    std::vector<std::string> files;
     std::vector<std::vector<unsigned>> data;
 public:
     void add_measurement(std::vector<unsigned> worker_data) {
@@ -26,7 +22,7 @@ public:
     }
 
     void write_to_files() {
-	std::cout << "Execution time: " << data[0][0] << std::endl;
+	std::cout << "Execution time: " << data[0][0] / (data.size() - 1) << std::endl;
     }
 
     explicit Measurement(std::string cnf_path, std::string prefix) {
