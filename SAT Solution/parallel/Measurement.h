@@ -1,7 +1,3 @@
-//
-// Created by jan on 08.12.17.
-//
-
 #ifndef SAT_SOLVER_MEASUREMENT_H
 #define SAT_SOLVER_MEASUREMENT_H
 
