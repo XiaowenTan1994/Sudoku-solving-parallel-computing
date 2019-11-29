@@ -26,29 +26,10 @@ public:
     }
 
     void write_to_files() {
-	std::cout << "Execution time: " << data[0][0] - data[0][1] << std::endl;
-	/*
-        std::ofstream file;
-        for (int m = 0; m < NUM_MEASUREMENTS; m++) {
-            file.open(files[m], std::ios_base::app);
-            for (int w = 0; w < data.size(); w++) {
-                file << data[w][m] << " ";
-            }
-            file << std::endl;
-            file.close();
-        }
-		*/
+	std::cout << "Execution time: " << data[0][0] << std::endl;
     }
 
     explicit Measurement(std::string cnf_path, std::string prefix) {
-		/*
-        size_t last_dot = cnf_path.find_last_of('.');
-        std::string raw_name = cnf_path.substr(0, last_dot);
-        files.push_back(raw_name + "_" + prefix + ".time");
-        files.push_back(raw_name + "_" + prefix + ".wait");
-        files.push_back(raw_name + "_" + prefix + ".comm");
-        files.push_back(raw_name + "_" + prefix + ".comm2");
-		*/
     }
 };
 
