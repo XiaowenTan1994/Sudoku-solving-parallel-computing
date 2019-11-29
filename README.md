@@ -1,6 +1,6 @@
 # Sudoku-solving-parallel-computing
 
-##Convert Sudoku to SAT
+## Convert Sudoku to SAT
 We test this method on USC HPC server. To solve Sudoku, the first thing to do is to convert Sudoku to CNF formula. The second is to solve this SAT problem. Finally, convert output CNF file to Sudoku.
 Example of running serial code
 ```bash
