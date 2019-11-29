@@ -1,7 +1,3 @@
-//
-// Created by jan on 23.11.17.
-//
-
 #include "CdclDependencyGraph.h"
 
 /*
