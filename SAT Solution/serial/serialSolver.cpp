@@ -14,7 +14,6 @@ using namespace std::chrono;
 
 void default_args(map<string, string>* arg_map) {
 	arg_map->insert({ "-s", "CDCL" });
-	//arg_map->insert({ "-cerr-level", "0" });
 };
 
 int main(int argc, char* argv[]) {
@@ -33,7 +32,6 @@ int main(int argc, char* argv[]) {
 		auto* res = new CDCL(*cur);
 		bool sat = res->SATISFIABLE();
 		if (sat) {
-			//cout << "sat" << std::endl;
 			CDCL::output(res->get_cnf()->get_model());
 		}
 		else {
