@@ -1,11 +1,3 @@
-//
-//  Model.h
-//  SAT-Solver
-//
-//  Created by Jakub Lichman on 10/26/17.
-//  Copyright © 2017 Jakub Lichman. All rights reserved.
-//
-
 #ifndef Model_h_
 #define Model_h_
 
