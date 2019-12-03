@@ -1,4 +1,7 @@
 # Sudoku-solving-parallel-computing
+## Pencil and paper solution
+We test this method on USC HPC server. Instructions to run the program:
+1.put 
 
 ## Convert Sudoku to SAT
 We test this method on USC HPC server. To solve Sudoku, the first thing to do is to convert Sudoku to CNF formula. The second is to solve this SAT problem. Finally, convert output CNF file to Sudoku.
