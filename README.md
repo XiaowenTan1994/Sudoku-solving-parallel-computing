@@ -24,7 +24,7 @@ g++ -std=c++11 -o sudoku2sat sudoku2sat.cpp
 g++ -std=c++11 -o sat2sudoku sat2sudoku.cpp
 make parallel
 ./sudoku2sat
-salloc --na=tasks=64
+salloc --n=tasks=64
 source /usr/usc/openmpi/1.8.8/setup.sh
 mpirun -np 4 ./parallel input.cnf
 logout
