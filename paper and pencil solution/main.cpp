@@ -1,6 +1,6 @@
 #include"sukudo.h"
 #include<fstream>
-#include<ctime>
+#include<time.h>
 #include<pthread.h>
 #pragma comment(lib, "pthreadVC2.lib")
 using namespace std;
@@ -102,7 +102,7 @@ void findfixedposition() {
 }
 
 void* distribute_solve(void* threadarg) {
-	int index = (int)threadarg;
+	int index = *((int*)(&threadarg));
 	sukudo temp = sukudo_now;
 	temp.matrix[sukudo_now.longest_i][sukudo_now.longest_j].val = temp.matrix[sukudo_now.longest_i][sukudo_now.longest_j].options_list.at(index);
 	flag_thread[index] = solve(0, 0, temp);
@@ -171,7 +171,7 @@ void   Delay(int   time)
 }
 
 int main() {
-	ifstream ifs("sukudo.txt");
+	ifstream ifs("input.txt");
 	int matrix[9][9];
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
@@ -180,13 +180,12 @@ int main() {
 			matrix[i][j] = num;
 		}
 	}
+	clock_t start = clock();
 	sukudo_now = sukudo(matrix);
-	//sukudo_now.print();
-	//cout << endl << endl;
 	findfixedposition();
-	//sukudo_now.print();
-	//cout << endl << endl;
 	solve();
+	clock_t end = clock();
 	result.print();
+	cout << (double)(end - start) / (double)CLOCKS_PER_SEC << endl;
 	return 0;
 }

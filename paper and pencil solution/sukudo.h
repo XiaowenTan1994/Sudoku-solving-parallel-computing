@@ -68,8 +68,13 @@ sukudo::sukudo(int data[9][9])
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
 			matrix[i][j].val = data[i][j];
+			/*if(matrix[i][j].val == 0){
+				longest_i = i;
+				longest_j = j;
+			}*/
 		}
 	}
+	//optionlongest = 9;
 	longest_i = 0;
 	longest_j = 0;
 	optionlongest = 0;
