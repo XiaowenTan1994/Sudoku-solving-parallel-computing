@@ -1,6 +1,7 @@
 # Sudoku-solving-parallel-computing
 ## Simple Backtracking
 Both cpu_backtracking.cpp and gpu_backtracking.cu was tested on USC HPC Server. 
+
 Input file prepare:
 ```bash
 Insert your Sudoku probelm in a .txt file.
